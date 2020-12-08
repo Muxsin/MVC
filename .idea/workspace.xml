@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07884eab-6148-4b6d-9736-edcfc39d8b96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Controllers/AuthController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Views/Auth/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Controllers/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/TaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Entity/Task.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entity/Task.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/TaskModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TaskModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Views/Auth/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/Auth/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Views/Tasks/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/Tasks/create.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Views/Tasks/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/Tasks/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Views/Tasks/show.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/Tasks/show.php" afterDir="false" />
@@ -60,7 +60,7 @@
       <updated>1607325488745</updated>
       <workItem from="1607325490622" duration="31225000" />
       <workItem from="1607363317050" duration="14154000" />
-      <workItem from="1607401483482" duration="22059000" />
+      <workItem from="1607401483482" duration="27380000" />
     </task>
     <servers />
   </component>

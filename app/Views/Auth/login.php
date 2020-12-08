@@ -6,6 +6,17 @@
     <title>Login</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" >ProblemBookApp</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" active href="/?route=/tasks">Tasks</a>
+                <a class="nav-link" href="/?route=/tasks/create">Create task</a>
+            </div>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <form action="/?route=/auth" method="post" style="width: 300px">
         <h2 class="text-center">Login</h2>

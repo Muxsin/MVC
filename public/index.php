@@ -29,6 +29,11 @@ $route = strtolower($_SERVER['REQUEST_METHOD']) . ':' . $_REQUEST['route'];
 $controllerName = $controllersNamespace . $routes[$route]['controller'];
 $method = $routes[$route]['method'];
 
+if ($_SERVER['REQUEST_URI'] === '/') {
+    $controllerName = $controllersNamespace . 'TaskController';
+    $method = 'index';
+}
+
 if (method_exists($controllerName, $method)) {
     $controller = new $controllerName();
     $response = $controller->$method();

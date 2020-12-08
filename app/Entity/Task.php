@@ -4,6 +4,10 @@ namespace App\Entity;
 
 class Task
 {
+    /**
+     * @var int|null
+     */
+    private $id;
     private $username;
     private $email;
     /**
@@ -12,8 +16,9 @@ class Task
     private $description;
     private $status;
 
-    public function __construct(string $username, string $email, string $description, int $status)
+    public function __construct(int $id, string $username, string $email, string $description, int $status)
     {
+        $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->description = $description;
@@ -82,5 +87,21 @@ class Task
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }

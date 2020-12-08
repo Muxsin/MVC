@@ -9,10 +9,25 @@
     <title>Tasks</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" >ProblemBookApp</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" active href="/?route=/tasks">Tasks</a>
+                <a class="nav-link" href="/?route=/tasks/create">Create task</a>
+                <?php
+                if (isset($_SESSION['login'])) {
+                    echo '<a class="btn btn-primary" href="/?route=/auth/logout">Logout</a>';
+                } else {
+                    echo '<a class="btn btn-primary" href="/?route=/auth">Login</a>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</nav>
 <?php
-if (isset($_SESSION['login'])) {
-    echo '<a class="btn btn-primary" href="/?route=/auth/logout">Logout</a>';
-}
 if($_SESSION['login'] == 1) {
     echo "Hello Admin!";
 }
@@ -30,6 +45,7 @@ if(isset($_SESSION['msg'])) {
             <th>Email</th>
             <th>Description</th>
             <th>Status</th>
+            <th>Option</th>
         </tr>
     </thead>
     <?php
@@ -48,6 +64,7 @@ if(isset($_SESSION['msg'])) {
         } else {
             echo "<td>Done!</td>";
         }
+        echo "<td><a class='btn btn-primary' href='/?route=/tasks/show&taskId={$task->getId()}'>Show</a> | <a class='btn btn-primary' href='/?route=/tasks/edit&taskId={$task->getId()}'>Edit</a></td>";
         echo "</tr>";
     }
     ?>

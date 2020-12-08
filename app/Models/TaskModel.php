@@ -37,7 +37,7 @@ class TaskModel {
                 $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
                 $task['status'] = (int) $task['status'];
 
-                $result[] = new Task($task['username'], $task['email'], $task['description'], $task['status']);
+                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
             }
 
             return $result;
@@ -56,7 +56,7 @@ class TaskModel {
                 $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
                 $task['status'] = (int) $task['status'];
 
-                $result[] = new Task($task['username'], $task['email'], $task['description'], $task['status']);
+                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
             }
 
             return $result;
@@ -72,7 +72,7 @@ class TaskModel {
             return "Error: " . $sql . "<br>" . $this->connection->error;
         } else {
             $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
-            $result = new Task($task['username'], $task['email'], $task['description'], $task['status']);
+            $result = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
 
             return $result;
         }
@@ -92,14 +92,14 @@ class TaskModel {
         $_SESSION['msg'] = "Tasks was created successfully";
     }
 
-    public function update(Task $task, int $id) {
+    public function update(Task $task) {
         $sql = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=? where id=?");
         $sql->bind_param("sssii", $username, $email, $description, $status, $id);
         $username = $task->getUsername();
         $email = $task->getEmail();
         $description = $task->getDescription();
         $status = $task->getStatus();
-        $id = $id;
+        $id = $task->getId();
         $sql->execute();
         $sql->close();
 
