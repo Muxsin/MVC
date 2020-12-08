@@ -9,6 +9,19 @@
     <title>Tasks</title>
 </head>
 <body>
+<?php
+if (isset($_SESSION['login'])) {
+    echo '<a class="btn btn-primary" href="/?route=/auth/logout">Logout</a>';
+}
+if($_SESSION['login'] == 1) {
+    echo "Hello Admin!";
+}
+
+if(isset($_SESSION['msg'])) {
+   echo "<p>{$_SESSION['msg']}</p>";
+   unset($_SESSION['msg']);
+}
+?>
 <table class="table">
     <h1 class="text-center">Tasks</h1>
     <thead class="thead-ligh">
@@ -41,7 +54,7 @@
 </table>
 <?php
 for($page = 1; $page <= $number_of_pages; $page++) {
-    echo '<a href="/?route=/tasks&page=' . $page . '">' . $page . '</a>';
+    echo '<a href="/?route=/tasks&page=' . $page . '">' . $page. ' ' . '</a>';
 }
 ?>
 </body>

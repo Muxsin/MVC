@@ -2,16 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Users</title>
+    <title>Create Tasks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Create user</h1>
-    <form action="/?route=/tasks/store" method="post">
-        Username: <input type="text" name="username">
-        Email: <input type="email" name="email">
-        Description <input type="text" name="description">
-        <input type="submit" value="Create">
-
-    </form>
+<?php
+if (isset($_SESSION['login'])) {
+    echo '<a class="btn btn-primary" href="/?route=/auth/logout">Logout</a>';
+}
+?>
+    <div class="container">
+        <form  action="/?route=/tasks/store" method="post" style="width: 300px">
+            <h1 class="text-center">Create task</h1>
+            <div class="mb-3">
+                <label for="InputUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="InputUsername" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="InputEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="InputEmail" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="InputDescription" class="form-label">Description</label>
+                <input type="text" class="form-control" id="InputDescription" name="description">
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -18,7 +18,11 @@ $routes = [
     'get:/tasks/delete' => ['controller' => 'TaskController', 'method' => 'delete'],
     'get:/tasks/edit' => ['controller' => 'TaskController', 'method' => 'edit'],
     'post:/tasks/update' => ['controller' => 'TaskController', 'method' => 'update'],
+    'get:/auth' => ['controller' => 'AuthController', 'method' => 'loginView'],
+    'post:/auth' => ['controller' => 'AuthController', 'method' => 'login'],
+    'get:/auth/logout' => ['controller' => 'AuthController', 'method' => 'logout'],
 ];
+session_start();
 
 $route = strtolower($_SERVER['REQUEST_METHOD']) . ':' . $_REQUEST['route'];
 

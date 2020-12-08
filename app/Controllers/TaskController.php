@@ -6,7 +6,7 @@ use App\Entity\Task;
 
 class TaskController
 {
-    public function index()
+    static public function index()
     {
         $model = new TaskModel();
         $model->connect();
@@ -59,8 +59,20 @@ class TaskController
     }
 
     public function store() {
-        $username = $_REQUEST['username'];
-        $email = $_REQUEST['email'];
+        if(trim($_REQUEST['username']) === "") {
+            echo "Invalid username!";
+            exit(0);
+        } else {
+            $username = $_REQUEST['username'];
+        }
+
+        if(trim($_REQUEST['email']) === "") {
+            echo "Invalid email!";
+            exit(0);
+        } else {
+            $email = $_REQUEST['email'];
+        }
+
         $description = $_REQUEST['description'];
         $status = 0;
 
@@ -86,25 +98,49 @@ class TaskController
 
     public function edit()
     {
-        $model = new TaskModel();
-        $model->connect();
-        $taskId = (int) $_GET['taskId'];
-        $task = $model->getOne($taskId);
-        $model->disconnect();
+        if(isset($_SESSION['login']) and $_SESSION['login'] === 1) {
+            $model = new TaskModel();
+            $model->connect();
+            $taskId = (int) $_GET['taskId'];
+            $task = $model->getOne($taskId);
+            $model->disconnect();
 
-        return [
-            'view' => 'Tasks/update.php',
-            'data' => [
-                'task' => $task,
-            ],
-        ];
+            return [
+                'view' => 'Tasks/update.php',
+                'data' => [
+                    'task' => $task,
+                ],
+            ];
+        } else {
+            return [
+                'view' => 'Auth/login.php',
+            ];
+        }
+
     }
 
     public function update() {
-        $username = $_REQUEST['username'];
-        $email = $_REQUEST['email'];
+        if(trim($_REQUEST['username']) === "") {
+            echo "Invalid username!";
+            exit(0);
+        } else {
+            $username = $_REQUEST['username'];
+        }
+
+        if(trim($_REQUEST['email']) === "") {
+            echo "Invalid email!";
+            exit(0);
+        } else {
+            $email = $_REQUEST['email'];
+        }
+
         $description = $_REQUEST['description'];
-        $status = (int) $_REQUEST['status'];
+
+        if(isset($_REQUEST['status'])) {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
 
         $model = new TaskModel();
         $model->connect();
@@ -114,5 +150,4 @@ class TaskController
 
         return $this->show();
     }
-
 }

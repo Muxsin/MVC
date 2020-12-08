@@ -79,25 +79,32 @@ class TaskModel {
     }
 
     public function add(Task $task) {
-        $sql = "insert into tasks (username, email, description, status) values('{$task->getUsername()}', '{$task->getEmail()}', '{$task->getDescription()}', '{$task->getStatus()}');";
-        $inserted = $this->connection->query($sql);
+        $sql = $this->connection->prepare("insert into tasks (username, email, description, status) values (?, ?, ?, ?)");
+        $sql->bind_param("sssi", $username, $email, $description, $status);
 
-        if($inserted === NULL) {
-            return "Error: " . $sql . "<br>" . $this->connection->error;
-        } else {
-            return "Task was inserted successfully!";
-        }
+        $username = $task->getUsername();
+        $email = $task->getEmail();
+        $description = $task->getDescription();
+        $status = $task->getStatus();
+        $sql->execute();
+        $sql->close();
+        session_start();
+        $_SESSION['msg'] = "Tasks was created successfully";
     }
 
     public function update(Task $task, int $id) {
-        $sql = "update tasks set username='{$task->getUsername()}', email='{$task->getEmail()}', description='{$task->getDescription()}', status={$task->getStatus()} where id={$id}";
-        $updated = $this->connection->query($sql);
+        $sql = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=? where id=?");
+        $sql->bind_param("sssii", $username, $email, $description, $status, $id);
+        $username = $task->getUsername();
+        $email = $task->getEmail();
+        $description = $task->getDescription();
+        $status = $task->getStatus();
+        $id = $id;
+        $sql->execute();
+        $sql->close();
 
-        if($updated === NULL) {
-            return "Error: " . $sql . "<br>" . $this->connection->error;
-        } else {
-            return "Task was updated successfully!";
-        }
+        session_start();
+        $_SESSION['msg'] = "Tasks was updated successfully";
     }
 
     public function delete(int $id) {
@@ -107,7 +114,9 @@ class TaskModel {
         if($deleted === NULL) {
             return "Error: " . $sql . "<br>" . $this->connection->error;
         } else {
-            return "Task was deleted successfully!";
+
+            session_start();
+            $_SESSION['msg'] = "Tasks was deleted successfully";
         }
     }
 
