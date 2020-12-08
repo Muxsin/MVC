@@ -44,8 +44,9 @@
     } else {
         echo "<p>Status: Done!</p>";
     }
-
-    echo '<a class="btn btn-danger stretched-link" href="/?route=/tasks/delete&taskId=' . $_GET['taskId'] . '">Delete' . '</a>';
+    if (isset($_SESSION['login'])) {
+        echo '<a class="btn btn-danger stretched-link" href="/?route=/tasks/delete&taskId=' . $_GET['taskId'] . '">Delete' . '</a>';
+    }
     ?>
     </div>
 </div>
