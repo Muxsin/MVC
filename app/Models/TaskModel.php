@@ -32,25 +32,6 @@ class TaskModel {
         }
     }
 
-    public function getAll() {
-        $sql = 'select * from tasks order by username';
-        $tasks = $this->connection->query($sql)->fetch_all(MYSQLI_ASSOC);
-        $result = [];
-
-        if($tasks === NULL) {
-            return "Error: " . $sql . "<br>" . $this->connection->error;
-        } else {
-            foreach ($tasks as $task) {
-                $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
-                $task['status'] = (int) $task['status'];
-
-                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
-            }
-
-            return $result;
-        }
-    }
-
     public function getByLimit(int $this_page_first_result, int $result_per_page)
     {
         $sql = $this->connection->prepare('select * from tasks order by username limit ?, ?');
