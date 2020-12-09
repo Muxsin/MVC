@@ -6,27 +6,10 @@
     <title>Update Tasks</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" >ProblemBookApp</a>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" active href="/?route=/tasks">Tasks</a>
-                <a class="nav-link" href="/?route=/tasks/create">Create task</a>
-                <?php
-                if (isset($_SESSION['login'])) {
-                    echo '<a class="btn btn-primary" href="/?route=/auth/logout">Logout</a>';
-                } else {
-                    echo '<a class="btn btn-primary" href="/?route=/auth">Login</a>';
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-</nav>
+    <?php include dirname(__FILE__) . '/../components/navbar.php'; ?>
 <?php
     echo '<div class="container">';
-    echo "<form action='/?route=/tasks/update&taskId=". $_GET['taskId'] . '\' ' . "method='post' style='width: 300px'>";
+    echo "<form action='" . prepareUrl('/tasks/update?taskId=' . $task->getId()) . "' method='post' style='width: 300px'>";
     echo "<h2 class='text-center'>Update user</h2>";
     echo '<div class="mb-3">';
     echo '<label for="InputUsername" class="form-label">Username</label>';

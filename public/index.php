@@ -1,14 +1,32 @@
 <?php
 
+$baseUrl = dirname($_SERVER['SCRIPT_NAME']);
+if ($baseUrl[strlen($baseUrl) - 1] !== '/') $baseUrl .= '/';
+
 $baseDir = dirname(__DIR__) . DIRECTORY_SEPARATOR;
 $appDir = $baseDir . 'app' . DIRECTORY_SEPARATOR;
 $viewsDir = $appDir . 'Views' . DIRECTORY_SEPARATOR;
 $publicDir = $baseDir . 'public' . DIRECTORY_SEPARATOR;
 
+$config = parse_ini_file($baseDir . 'config.ini', true);
+
 require $baseDir . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $controllersNamespace = 'App\\Controllers\\';
 $modelsNamespace = 'App\\Models\\';
+
+function prepareUrl(string $url)
+{
+    global $baseUrl;
+    $newUrl = $baseUrl . ltrim($url, '/');
+    return $newUrl;
+}
+
+function redirect(string $url)
+{
+    header('Location: ' . $url);
+    exit();
+}
 
 $routes = [
     'get:/tasks' => ['controller' => 'TaskController', 'method' => 'index'],
@@ -24,15 +42,16 @@ $routes = [
 ];
 session_start();
 
-$route = strtolower($_SERVER['REQUEST_METHOD']) . ':' . $_REQUEST['route'];
+$requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+$requestRoute = substr((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $baseUrl . 'tasks'), strlen($baseUrl) - 1);
+$route =  $requestMethod . ':' . $requestRoute;
+
+var_dump($requestMethod);
+var_dump($requestRoute);
+var_dump($route);
 
 $controllerName = $controllersNamespace . $routes[$route]['controller'];
 $method = $routes[$route]['method'];
-
-if ($_SERVER['REQUEST_URI'] === '/') {
-    $controllerName = $controllersNamespace . 'TaskController';
-    $method = 'index';
-}
 
 if (method_exists($controllerName, $method)) {
     $controller = new $controllerName();

@@ -1,0 +1,5 @@
+[mysql]
+hostname = localhost:3306
+database = app
+username = root
+password =

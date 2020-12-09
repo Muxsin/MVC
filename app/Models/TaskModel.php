@@ -5,15 +5,22 @@ use \mysqli;
 use App\Entity\Task;
 
 class TaskModel {
-    protected $hostname = 'localhost';
-    protected $username = 'muhsin';
-    protected $password = 'secret';
-    protected $dbname = 'problem_book_app';
+    protected $hostname;
+    protected $username;
+    protected $password;
+    protected $dbname;
 
     protected $connection;
 
     public function __construct()
     {
+        global $config;
+
+        $this->hostname = $config['mysql']['hostname'];
+        $this->username = $config['mysql']['username'];
+        $this->password = $config['mysql']['password'];
+        $this->dbname = $config['mysql']['database'];
+
         $this->connection = null;
     }
 

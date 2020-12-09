@@ -18,7 +18,7 @@ class AuthController {
         if($username === 'admin' and $password === '123') {
             $_SESSION['login'] = 1;
 
-            return TaskController::index();
+            redirect(prepareUrl('/tasks'));
         } else {
             echo "User or password incorrect";
         }
@@ -27,6 +27,6 @@ class AuthController {
         unset($_SESSION['login']);
         session_destroy();
 
-        return TaskController::index();
+        redirect(prepareUrl('/tasks'));
     }
 }

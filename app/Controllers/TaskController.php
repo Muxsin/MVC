@@ -6,7 +6,7 @@ use App\Entity\Task;
 
 class TaskController
 {
-    static public function index()
+    public function index()
     {
         $model = new TaskModel();
         $model->connect();
@@ -82,7 +82,7 @@ class TaskController
         $model->add($task);
         $model->disconnect();
 
-        return $this->index();
+        redirect(prepareUrl('/tasks'));
     }
 
     public function delete()
@@ -93,7 +93,7 @@ class TaskController
         $model->delete($taskId);
         $model->disconnect();
 
-        return $this->index();
+        redirect(prepareUrl('/tasks'));
     }
 
     public function edit()
@@ -148,6 +148,6 @@ class TaskController
         $model->update($task);
         $model->disconnect();
 
-        return $this->show();
+        redirect(prepareUrl('/tasks/show?taskId=' . $id));
     }
 }
