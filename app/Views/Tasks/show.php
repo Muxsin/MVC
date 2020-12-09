@@ -13,24 +13,30 @@
     <?php
     echo '<div class="container">';
     ?>
-    <div class="card" style="width: 300px">
-    <?php
-    echo "<h3>Username: {$task->getUsername()}</h3>";
-    echo "<p>Email: {$task->getEmail()}</p>";
-    if ($task->getDescription() === "") {
-        echo "<p>Description: Empty!</p>";
-    } else {
-        echo "<p>Description: {$task->getDescription()}</p>";
-    }
-    if ($task->getStatus() === 0) {
-        echo "<p>Status: In expectation!</p>";
-    } else {
-        echo "<p>Status: Done!</p>";
-    }
-    if (isset($_SESSION['login'])) {
-        echo '<a class="btn btn-danger stretched-link" href="' . prepareUrl('/tasks/delete?taksId=' . $task->getId()) . '">Delete' . '</a>';
-    }
-    ?>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <?php
+                    echo "<h3>Username: {$task->getUsername()}</h3>";
+                    echo "<p>Email: {$task->getEmail()}</p>";
+                    if ($task->getDescription() === "") {
+                        echo "<p>Description: Empty!</p>";
+                    } else {
+                        echo "<p>Description: {$task->getDescription()}</p>";
+                    }
+                    if ($task->getStatus() === 0) {
+                        echo "<p>Status: In expectation!</p>";
+                    } else {
+                        echo "<p>Status: Done!</p>";
+                    }
+                    if (isset($_SESSION['login'])) {
+                        echo '<a class="btn btn-danger stretched-link" href="' . prepareUrl('/tasks/delete?taskId=' . $task->getId()) . '">Delete' . '</a>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,3 +1,6 @@
+[admin]
+username = admin
+password = secret
 [mysql]
 hostname = localhost:3306
 database = app

@@ -51,9 +51,13 @@ class TaskModel {
         }
     }
 
-    public function getByLimit(int $this_page_first_result, int $result_per_page) {
-        $sql = 'select * from tasks order by username limit ' . $this_page_first_result . ',' . $result_per_page;
-        $tasks = $this->connection->query($sql)->fetch_all(MYSQLI_ASSOC);
+    public function getByLimit(int $this_page_first_result, int $result_per_page)
+    {
+        $sql = $this->connection->prepare('select * from tasks order by username limit ?, ?');
+        $sql->bind_param('ii', $this_page_first_result, $result_per_page);
+        $sql->execute();
+        $tasks = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        $sql->close();
         $result = [];
 
         if($tasks === NULL) {
@@ -72,8 +76,11 @@ class TaskModel {
 
     public function getOne(int $id)
     {
-        $sql = 'select * from tasks where id=' . $id;
-        $task = $this->connection->query($sql)->fetch_assoc();
+        $sql = $this->connection->prepare('select * from tasks where id=?');
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $task = $sql->get_result()->fetch_assoc();
+        $sql->close();
 
         if($task === NULL) {
             return "Error: " . $sql . "<br>" . $this->connection->error;
@@ -85,7 +92,8 @@ class TaskModel {
         }
     }
 
-    public function add(Task $task) {
+    public function add(Task $task) 
+    {
         $sql = $this->connection->prepare("insert into tasks (username, email, description, status) values (?, ?, ?, ?)");
         $sql->bind_param("sssi", $username, $email, $description, $status);
 
@@ -95,8 +103,8 @@ class TaskModel {
         $status = $task->getStatus();
         $sql->execute();
         $sql->close();
-        session_start();
-        $_SESSION['msg'] = "Tasks was created successfully";
+
+        $_SESSION['msg'] = "Task was created successfully";
     }
 
     public function update(Task $task) {
@@ -110,21 +118,16 @@ class TaskModel {
         $sql->execute();
         $sql->close();
 
-        session_start();
-        $_SESSION['msg'] = "Tasks was updated successfully";
+        $_SESSION['msg'] = "Task was updated successfully";
     }
 
     public function delete(int $id) {
-        $sql = 'delete from tasks where id=' . $id;
-        $deleted = $this->connection->query($sql);
+        $sql = $this->connection->prepare('delete from tasks where id=?');
+        $sql->bind_param('i', $id);
+        $sql->execute();
+        $sql->close();
 
-        if($deleted === NULL) {
-            return "Error: " . $sql . "<br>" . $this->connection->error;
-        } else {
-
-            session_start();
-            $_SESSION['msg'] = "Tasks was deleted successfully";
-        }
+        $_SESSION['msg'] = "Task was deleted successfully";
     }
 
     public function disconnect() {
