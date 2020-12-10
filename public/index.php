@@ -15,6 +15,17 @@ require $baseDir . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 $controllersNamespace = 'App\\Controllers\\';
 $modelsNamespace = 'App\\Models\\';
 
+function addMessage(string $group, string $message) {
+    $_SESSION[$group][] = htmlspecialchars($message);
+}
+
+function getMessages(string $group) {
+    $messages = $_SESSION[$group] ?? [];
+    unset($_SESSION[$group]);
+
+    return $messages;
+}
+
 function prepareUrl(string $url)
 {
     global $baseUrl;
@@ -55,13 +66,18 @@ if (method_exists($controllerName, $method)) {
     $response = $controller->$method();
 
     if (isset($response['view'])) {
+        $layout = $viewsDir . 'layouts/app.php';
         $view = $viewsDir . $response['view'];
 
         if (isset($response['data'])) {
             extract($response['data']);
         }
 
-        include $view;
+        $successes = getMessages('successes');
+        $infos = getMessages('infos');
+        $errors = getMessages('errors');
+
+        include $layout;
     } elseif (isset($response['data'])) {
         var_dump($response['data']);
     }

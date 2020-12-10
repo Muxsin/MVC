@@ -10,6 +10,9 @@ class TaskModel {
     protected $password;
     protected $dbname;
 
+    /**
+     * @var mysqli|null
+     */
     protected $connection;
 
     public function __construct()
@@ -29,6 +32,25 @@ class TaskModel {
 
         if ($this->connection->connect_error) {
             die("Invalid connection: " . $this->connection->connect_error);
+        }
+    }
+
+    public function getAll() {
+        $sql = 'select * from tasks order by username';
+        $tasks = $this->connection->query($sql)->fetch_all(MYSQLI_ASSOC);
+        $result = [];
+
+        if($tasks === NULL) {
+            return "Error: " . $sql . "<br>" . $this->connection->error;
+        } else {
+            foreach ($tasks as $task) {
+                $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
+                $task['status'] = (int) $task['status'];
+
+                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
+            }
+
+            return $result;
         }
     }
 
@@ -75,40 +97,96 @@ class TaskModel {
 
     public function add(Task $task) 
     {
-        $sql = $this->connection->prepare("insert into tasks (username, email, description, status) values (?, ?, ?, ?)");
-        $sql->bind_param("sssi", $username, $email, $description, $status);
+        $statement = $this->connection->prepare("insert into tasks (username, email, description, status) values (?, ?, ?, ?)");
+        if ($statement !== false) {
+            $result = $statement->bind_param("sssi", $username, $email, $description, $status);
 
-        $username = $task->getUsername();
-        $email = $task->getEmail();
-        $description = $task->getDescription();
-        $status = $task->getStatus();
-        $sql->execute();
-        $sql->close();
+            if ($result !== false) {
+                $username = $task->getUsername();
+                $email = $task->getEmail();
+                $description = $task->getDescription();
+                $status = $task->getStatus();
 
-        $_SESSION['msg'] = "Task was created successfully";
+                $result = $statement->execute();
+
+                if ($result !== false) {
+                    $statement->close();
+
+                    addMessage('successes', 'Task was created successfully.');
+
+                    return true;
+                }
+            }
+        } else {
+            addMessage('errors', $this->connection->error);
+
+            return false;
+        }
+
+        addMessage('errors', $statement->error);
+
+        return false;
     }
 
     public function update(Task $task) {
-        $sql = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=? where id=?");
-        $sql->bind_param("sssii", $username, $email, $description, $status, $id);
-        $username = $task->getUsername();
-        $email = $task->getEmail();
-        $description = $task->getDescription();
-        $status = $task->getStatus();
-        $id = $task->getId();
-        $sql->execute();
-        $sql->close();
+        $statement = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=? where id=?");
+        if ($statement !== false) {
+            $result = $statement->bind_param("sssii", $username, $email, $description, $status, $id);
 
-        $_SESSION['msg'] = "Task was updated successfully";
+            if ($result !== false) {
+                $username = $task->getUsername();
+                $email = $task->getEmail();
+                $description = $task->getDescription();
+                $status = $task->getStatus();
+                $id = $task->getId();
+
+                $result = $statement->execute();
+
+                if ($result !== false) {
+                    $statement->close();
+
+                    addMessage('infos', 'Task was updated successfully.');
+
+                    return true;
+                }
+            }
+        } else {
+            addMessage('errors', $this->connection->error);
+
+            return false;
+        }
+
+        addMessage('errors', $statement->error);
+
+        return false;
     }
 
     public function delete(int $id) {
-        $sql = $this->connection->prepare('delete from tasks where id=?');
-        $sql->bind_param('i', $id);
-        $sql->execute();
-        $sql->close();
+        $statement = $this->connection->prepare('delete from tasks where id=?');
 
-        $_SESSION['msg'] = "Task was deleted successfully";
+        if ($statement !== false) {
+            $result = $statement->bind_param('i', $id);
+
+            if ($result !== false) {
+                $result = $statement->execute();
+
+                if($result !== false) {
+                    $statement->close();
+
+                    addMessage('infos', 'Task was deleted successfully.');
+
+                    return true;
+                }
+            }
+        } else {
+            addMessage('errors', $this->connection->error);
+
+            return false;
+        }
+
+        addMessage('errors', $statement->error);
+
+        return false;
     }
 
     public function disconnect() {

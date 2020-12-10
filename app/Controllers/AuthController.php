@@ -29,14 +29,20 @@ class AuthController {
         if($username === $this->adminUsername and $password === $this->adminPassword) {
             $_SESSION['login'] = 1;
 
+            addMessage('infos', 'Welcome, Admin!');
+
             redirect(prepareUrl('/tasks'));
         } else {
-            echo "Invalid username or password!";
+            addMessage('errors', 'Invalid username or password');
+            redirect(prepareUrl('/auth'));
         }
     }
     public function logout() {
         unset($_SESSION['login']);
         session_destroy();
+        session_start();
+
+        addMessage('infos', 'Bye!');
 
         redirect(prepareUrl('/tasks'));
     }

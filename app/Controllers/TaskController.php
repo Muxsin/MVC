@@ -87,13 +87,20 @@ class TaskController
 
     public function delete()
     {
-        $model = new TaskModel();
-        $model->connect();
-        $taskId = (int) $_GET['taskId'];
-        $model->delete($taskId);
-        $model->disconnect();
+        if(isset($_SESSION['login']) and $_SESSION['login'] === 1) {
+            $model = new TaskModel();
+            $model->connect();
+            $taskId = (int)$_GET['taskId'];
+            $model->delete($taskId);
+            $model->disconnect();
 
-        redirect(prepareUrl('/tasks'));
+            redirect(prepareUrl('/tasks'));
+        } else {
+            return [
+                'view' => 'Auth/login.php',
+            ];
+        }
+
     }
 
     public function edit()
