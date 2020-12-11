@@ -8,13 +8,20 @@ class TaskController
 {
     public function index()
     {
+        if (isset($_GET['order_by']) && in_array($_GET['order_by'], TaskModel::ALLOWED_ORDER_BY, true)) {
+            $_SESSION['order_by'] = $_GET['order_by'];
+        }
+        if (isset($_GET['order_type']) && in_array($_GET['order_type'], TaskModel::ALLOWED_ORDER_TYPE, true)) {
+            $_SESSION['order_type'] = $_GET['order_type'];
+        }
+
         $model = new TaskModel();
         $model->connect();
         $tasks = $model->getAll();
 
-        $result_per_page = 3;
-        $number_of_results = count($tasks);
-        $number_of_pages = ceil($number_of_results/$result_per_page);
+        $limit = 3;
+        $totalTasks = count($tasks);
+        $number_of_pages = ceil($totalTasks/$limit);
 
         if(!isset($_GET['page'])) {
             $page = 1;
@@ -22,8 +29,8 @@ class TaskController
             $page = $_GET['page'];
         }
 
-        $this_page_first_result = ($page - 1) * $result_per_page;
-        $tasks = $model->getByLimit($this_page_first_result, $result_per_page);
+        $offset = ($page - 1) * $limit;
+        $tasks = $model->getByLimit($offset, $limit, $_SESSION['order_by'] ?? TaskModel::ALLOWED_ORDER_BY[0], $_SESSION['order_type'] ?? TaskModel::ALLOWED_ORDER_TYPE[0]);
 
         $model->disconnect();
         return [
@@ -63,17 +70,17 @@ class TaskController
             echo "Invalid username!";
             exit(0);
         } else {
-            $username = $_REQUEST['username'];
+            $username = htmlspecialchars(trim($_REQUEST['username']));
         }
 
         if(trim($_REQUEST['email']) === "") {
             echo "Invalid email!";
             exit(0);
         } else {
-            $email = $_REQUEST['email'];
+            $email = htmlspecialchars(trim($_REQUEST['email']));
         }
 
-        $description = $_REQUEST['description'];
+        $description = htmlspecialchars($_REQUEST['description']);
         $status = 0;
 
         $model = new TaskModel();
@@ -131,17 +138,17 @@ class TaskController
             echo "Invalid username!";
             exit(0);
         } else {
-            $username = $_REQUEST['username'];
+            $username = htmlspecialchars(trim($_REQUEST['username']));
         }
 
         if(trim($_REQUEST['email']) === "") {
             echo "Invalid email!";
             exit(0);
         } else {
-            $email = $_REQUEST['email'];
+            $email = htmlspecialchars(trim($_REQUEST['email']));
         }
 
-        $description = $_REQUEST['description'];
+        $description = htmlspecialchars($_REQUEST['description']);
 
         if(isset($_REQUEST['status'])) {
             $status = 1;

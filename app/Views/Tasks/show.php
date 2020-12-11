@@ -3,12 +3,12 @@
         <div class="card">
             <div class="card-header">
                 <?php
-                echo "{$task->getUsername()} <span class='text-muted'>({$task->getEmail()})</span>";
+                echo "" . $task->getUsername() . " <span class='text-muted'>(" . $task->getEmail() . ")</span>";
                 ?>
             </div>
             <div class="card-body">
                 <?php
-                echo "<p class='m-0'>{$task->getDescription()}</p>";
+                echo "<p class='m-0'>" . $task->getDescription() . "</p>";
                 ?>
             </div>
             <div class="card-footer">

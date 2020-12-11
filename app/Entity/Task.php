@@ -18,11 +18,11 @@ class Task
 
     public function __construct(int $id, string $username, string $email, string $description, int $status)
     {
-        $this->id = $id;
-        $this->username = $username;
-        $this->email = $email;
-        $this->description = $description;
-        $this->status = $status;
+        $this->setId($id);
+        $this->setUsername($username);
+        $this->setEmail($email);
+        $this->setDescription($description);
+        $this->setStatus($status);
     }
 
     /**

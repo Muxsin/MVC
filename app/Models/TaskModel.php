@@ -5,6 +5,9 @@ use \mysqli;
 use App\Entity\Task;
 
 class TaskModel {
+    const ALLOWED_ORDER_BY = ['username', 'email', 'status'];
+    const ALLOWED_ORDER_TYPE = ['asc', 'desc'];
+
     protected $hostname;
     protected $username;
     protected $password;
@@ -54,10 +57,17 @@ class TaskModel {
         }
     }
 
-    public function getByLimit(int $this_page_first_result, int $result_per_page)
+    public function getByLimit(int $offset, int $limit, string $orderBy = 'username', string $orderType = 'ASC')
     {
-        $sql = $this->connection->prepare('select * from tasks order by username limit ?, ?');
-        $sql->bind_param('ii', $this_page_first_result, $result_per_page);
+        $orderType = strtolower($orderType);
+        if (!in_array($orderBy, self::ALLOWED_ORDER_BY, true)) {
+            $orderBy = self::ALLOWED_ORDER_BY[0];
+        }
+        if (!in_array($orderType, self::ALLOWED_ORDER_TYPE, true)) {
+            $orderType = self::ALLOWED_ORDER_TYPE[0];
+        }
+        $sql = $this->connection->prepare("select * from tasks order by $orderBy $orderType limit ? offset ?");
+        $sql->bind_param('ii', $limit, $offset);
         $sql->execute();
         $tasks = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
         $sql->close();

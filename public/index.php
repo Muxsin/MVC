@@ -70,6 +70,7 @@ if (method_exists($controllerName, $method)) {
         $view = $viewsDir . $response['view'];
 
         if (isset($response['data'])) {
+
             extract($response['data']);
         }
 

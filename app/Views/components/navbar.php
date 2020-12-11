@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border rounded-bottom mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm border rounded-bottom mb-4">
     <div class="container-fluid">
         <a class="navbar-brand" >TaskMan</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">

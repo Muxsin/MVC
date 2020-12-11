@@ -8,15 +8,15 @@
                 <form  action="<?php echo prepareUrl('/tasks/update?taskId=' . $task->getId()); ?>" method="post">
                     <div class="form-group">
                         <label for="InputUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="InputUsername" name="username" value="<?php echo htmlspecialchars($task->getUsername()); ?>" required>
+                        <input type="text" class="form-control" id="InputUsername" name="username" value="<?php echo $task->getUsername(); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="InputEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="InputEmail" name="email" value="<?php echo htmlspecialchars($task->getEmail()); ?>" required>
+                        <input type="email" class="form-control" id="InputEmail" name="email" value="<?php echo $task->getEmail(); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="InputDescription" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="InputDescription" name="description" value="<?php echo htmlspecialchars($task->getDescription()); ?>">
+                        <input type="text" class="form-control" id="InputDescription" name="description" value="<?php echo $task->getDescription(); ?>">
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="statusBox" name="status" <?php echo $task->getStatus() === 1 ? "checked" : "" ; ?>>
