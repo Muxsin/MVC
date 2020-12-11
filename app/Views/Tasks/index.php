@@ -3,23 +3,23 @@
         <div class="mb-1 row justify-content-end">
             <form class="col-lg-6" action="<?php echo prepareUrl('/tasks'); ?>" method="get">
                 <div class="form-row align-items-end">
-                    <div class="form-group col">
-                        <label for="order_by" class="">Sort By:</label>
+                    <div class="form-group col  ">
+                        <label for="order_by" class="">Сортировать по:</label>
                         <select id="order_by" name="order_by" class="form-control">
-                            <option value="username" <?php echo ($_SESSION['order_by'] ?? "username") === "username" ? "selected" : ""; ?>>Username</option>
-                            <option value="email" <?php echo ($_SESSION['order_by'] ?? "username") === "email" ? "selected" : ""; ?>>Email</option>
-                            <option value="status" <?php echo ($_SESSION['order_by'] ?? "username") === "status" ? "selected" : ""; ?>>Status</option>
+                            <option value="username" <?php echo ($_SESSION['order_by'] ?? "username") === "username" ? "selected" : ""; ?>>Имя пользователя</option>
+                            <option value="email" <?php echo ($_SESSION['order_by'] ?? "username") === "email" ? "selected" : ""; ?>>Эл. почта</option>
+                            <option value="status" <?php echo ($_SESSION['order_by'] ?? "username") === "status" ? "selected" : ""; ?>>Статус</option>
                         </select>
                     </div>
                     <div class="form-group col">
-                        <label for="order_type" class="">Direction:</label>
+                        <label for="order_type" class="">Направления:</label>
                         <select id="order_type" name="order_type" class="form-control">
-                            <option value="asc" <?php echo ($_SESSION['order_type'] ?? "asc") === "asc" ? "selected" : ""; ?>>a-z</option>
-                            <option value="desc" <?php echo ($_SESSION['order_type'] ?? "asc") === "desc" ? "selected" : ""; ?>>z-a</option>
+                            <option value="asc" <?php echo ($_SESSION['order_type'] ?? "asc") === "asc" ? "selected" : ""; ?>>а-я</option>
+                            <option value="desc" <?php echo ($_SESSION['order_type'] ?? "asc") === "desc" ? "selected" : ""; ?>>я-а</option>
                         </select>
                     </div>
-                    <div class="form-group col-3">
-                        <input type="submit" class="btn btn-block btn-secondary" value="Sort">
+                    <div class="form-group col-4">
+                        <input type="submit" class="btn btn-block btn-secondary" value="Сортировать">
                     </div>
                 </div>
             </form>
@@ -29,11 +29,11 @@
                 <table class="table table-hover m-0">
                     <thead class="thead-light w-100">
                     <tr class="w-100">
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Options</th>
+                        <th>Имя пользователя</th>
+                        <th>Эл. почта</th>
+                        <th>Текст задачи</th>
+                        <th>Статус</th>
+                        <th>Настройка</th>
                     </tr>
                     </thead>
                     <?php
@@ -43,14 +43,22 @@
                         echo "<td>" . $task->getEmail() . "</td>";
                         echo "<td class='text-break'>" . $task->getDescription() . "</td>";
                         if ($task->getStatus() === 0) {
-                            echo "<td>In progress</td>";
+                            if ($task->getUpdated() === 1) {
+                                echo "<td class='text-break'>В ходе выполнения. Отредактировано администратором.</td>";
+                            } else {
+                                echo "<td>В ходе выполнения</td>";
+                            }
                         } else {
-                            echo "<td>Done</td>";
+                            if ($task->getUpdated() === 1) {
+                                echo "<td class='text-break'>Выполнено. Отредактировано администратором.</td>";
+                            } else {
+                                echo "<td>Выполнено</td>";
+                            }
                         }
                         echo "<td><div class='btn-group'>";
-                        echo "<a class='btn btn-sm btn-primary' href='" . prepareUrl('/tasks/show?taskId=' . $task->getId()) . "'>Show</a>";
-                        echo "<a class='btn btn-sm btn-warning' href='" . prepareUrl('/tasks/edit?taskId=' . $task->getId()) . "'>Edit</a>";
-                        echo "<a class='btn btn-sm btn-danger' href='" . prepareUrl('/tasks/delete?taskId=' . $task->getId()) . "'>Delete</a>";
+                        echo "<a class='btn btn-sm btn-primary' href='" . prepareUrl('/tasks/show?taskId=' . $task->getId()) . "'>Показать</a>";
+                        echo "<a class='btn btn-sm btn-warning' href='" . prepareUrl('/tasks/edit?taskId=' . $task->getId()) . "'>Редактировать</a>";
+                        echo "<a class='btn btn-sm btn-danger' href='" . prepareUrl('/tasks/delete?taskId=' . $task->getId()) . "'>Удалить</a>";
                         echo "</div></td>";
                         echo "</tr>";
                     }

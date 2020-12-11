@@ -15,14 +15,16 @@ class Task
      */
     private $description;
     private $status;
+    private $updated;
 
-    public function __construct(int $id, string $username, string $email, string $description, int $status)
+    public function __construct(int $id, string $username, string $email, string $description, int $status, int $updated)
     {
         $this->setId($id);
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setDescription($description);
         $this->setStatus($status);
+        $this->setUpdated($updated);
     }
 
     /**
@@ -103,5 +105,21 @@ class Task
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param mixed $updated
+     */
+    public function setUpdated($updated): void
+    {
+        $this->updated = $updated;
     }
 }

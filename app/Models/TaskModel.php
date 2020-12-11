@@ -49,8 +49,9 @@ class TaskModel {
             foreach ($tasks as $task) {
                 $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
                 $task['status'] = (int) $task['status'];
+                $task['updated'] = (int) $task['updated'];
 
-                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
+                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status'], $task['updated']);
             }
 
             return $result;
@@ -79,8 +80,9 @@ class TaskModel {
             foreach ($tasks as $task) {
                 $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
                 $task['status'] = (int) $task['status'];
+                $task['updated'] = (int) $task['updated'];
 
-                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
+                $result[] = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status'], $task['updated']);
             }
 
             return $result;
@@ -99,7 +101,7 @@ class TaskModel {
             return "Error: " . $sql . "<br>" . $this->connection->error;
         } else {
             $task['description'] = ($task['description'] === NULL) ? "" : $task['description'];
-            $result = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status']);
+            $result = new Task($task['id'], $task['username'], $task['email'], $task['description'], $task['status'], $task['updated']);
 
             return $result;
         }
@@ -107,15 +109,16 @@ class TaskModel {
 
     public function add(Task $task) 
     {
-        $statement = $this->connection->prepare("insert into tasks (username, email, description, status) values (?, ?, ?, ?)");
+        $statement = $this->connection->prepare("insert into tasks (username, email, description, status, updated) values (?, ?, ?, ?, ?)");
         if ($statement !== false) {
-            $result = $statement->bind_param("sssi", $username, $email, $description, $status);
+            $result = $statement->bind_param("sssii", $username, $email, $description, $status, $updated);
 
             if ($result !== false) {
                 $username = $task->getUsername();
                 $email = $task->getEmail();
                 $description = $task->getDescription();
                 $status = $task->getStatus();
+                $updated = $task->getUpdated();
 
                 $result = $statement->execute();
 
@@ -139,15 +142,16 @@ class TaskModel {
     }
 
     public function update(Task $task) {
-        $statement = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=? where id=?");
+        $statement = $this->connection->prepare("update tasks set username=?, email=?, description=?, status=?, updated=? where id=?");
         if ($statement !== false) {
-            $result = $statement->bind_param("sssii", $username, $email, $description, $status, $id);
+            $result = $statement->bind_param("sssiii", $username, $email, $description, $status, $updated, $id);
 
             if ($result !== false) {
                 $username = $task->getUsername();
                 $email = $task->getEmail();
                 $description = $task->getDescription();
                 $status = $task->getStatus();
+                $updated = $task->getUpdated();
                 $id = $task->getId();
 
                 $result = $statement->execute();

@@ -82,10 +82,11 @@ class TaskController
 
         $description = htmlspecialchars($_REQUEST['description']);
         $status = 0;
+        $updated = 0;
 
         $model = new TaskModel();
         $model->connect();
-        $task = new Task(0, $username, $email, $description, $status);
+        $task = new Task(0, $username, $email, $description, $status, $updated);
         $model->add($task);
         $model->disconnect();
 
@@ -155,10 +156,12 @@ class TaskController
         } else {
             $status = 0;
         }
+
+        $updated = 1;
         $id = (int) $_GET['taskId'];
         $model = new TaskModel();
         $model->connect();
-        $task = new Task($id, $username, $email, $description, $status);
+        $task = new Task($id, $username, $email, $description, $status, $updated);
         $model->update($task);
         $model->disconnect();
 
