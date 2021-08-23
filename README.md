@@ -5,7 +5,7 @@ Hello from **Muhsin** 👋. First of all thanks for viewing my repository, I'm g
 ```
  composer install
 ```
-2) Copy **config.ini.example** file and setting it. For emaxple:
+2) Copy **config.ini.example** file, change name to **config.ini** and setting it. For emaxple:
 ```ini
 [admin]
 username = admin
