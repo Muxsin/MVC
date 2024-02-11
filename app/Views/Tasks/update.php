@@ -5,7 +5,7 @@
                 Редактировать задачу
             </div>
             <div class="card-body">
-                <form  action="<?php echo prepareUrl('/tasks/update?taskId=' . $task->getId()); ?>" method="post">
+                <form  action="<?php echo '/tasks/update?taskId=' . $task->getId(); ?>" method="post">
                     <div class="form-group">
                         <label for="InputUsername" class="form-label">Имя пользователя</label>
                         <input type="text" class="form-control" id="InputUsername" name="username" value="<?php echo $task->getUsername(); ?>" required>

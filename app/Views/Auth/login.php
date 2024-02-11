@@ -5,7 +5,7 @@
                 Вход
             </div>
             <div class="card-body">
-                <form action="<?php echo prepareUrl('/auth') ?>" method="post">
+                <form action="/auth" method="post">
                     <div class="form-group">
                         <label for="InputUsername" class="form-label">Имя пользователя</label>
                         <input type="text" class="form-control" id="InputUsername" name="username" required>

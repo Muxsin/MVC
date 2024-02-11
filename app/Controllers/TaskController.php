@@ -90,7 +90,7 @@ class TaskController
         $model->add($task);
         $model->disconnect();
 
-        redirect(prepareUrl('/tasks'));
+        redirect('/tasks');
     }
 
     public function delete()
@@ -102,7 +102,7 @@ class TaskController
             $model->delete($taskId);
             $model->disconnect();
 
-            redirect(prepareUrl('/tasks'));
+            redirect('/tasks');
         } else {
             return [
                 'view' => 'Auth/login.php',
@@ -165,6 +165,6 @@ class TaskController
         $model->update($task);
         $model->disconnect();
 
-        redirect(prepareUrl('/tasks/show?taskId=' . $id));
+        redirect('/tasks/show?taskId=' . $id);
     }
 }

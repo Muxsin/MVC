@@ -16,8 +16,8 @@
                 echo $task->getStatus() === 0 ? "In progress" : "Done";
                 if (isset($_SESSION['login'])) {
                     echo '<div class="btn-group btn-group-sm float-right">';
-                    echo '<a class="btn btn-warning" href="' . prepareUrl('/tasks/edit?taskId=' . $task->getId()) . '">Редактировать' . '</a>';
-                    echo '<a class="btn btn-danger" href="' . prepareUrl('/tasks/delete?taskId=' . $task->getId()) . '">Удалить' . '</a>';
+                    echo '<a class="btn btn-warning" href="' . '/tasks/edit?taskId=' . $task->getId() . '">Редактировать' . '</a>';
+                    echo '<a class="btn btn-danger" href="' . '/tasks/delete?taskId=' . $task->getId() . '">Удалить' . '</a>';
                     echo '</div>';
                 }
                 ?>

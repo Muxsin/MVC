@@ -40,6 +40,7 @@ function redirect(string $url)
 }
 
 $routes = [
+    'get:/' => ['controller' => 'TaskController', 'method' => 'index'],
     'get:/tasks' => ['controller' => 'TaskController', 'method' => 'index'],
     'get:/tasks/create' => ['controller' => 'TaskController', 'method' => 'create'],
     'get:/tasks/show' => ['controller' => 'TaskController', 'method' => 'show'],
@@ -56,7 +57,7 @@ session_start();
 $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
 $requestRoute = substr((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $baseUrl . 'tasks'), strlen($baseUrl) - 1);
 $requestRoute = substr($requestRoute, 0, strpos($requestRoute, '?') !==  false ? strpos($requestRoute, '?') : strlen($requestRoute));
-$route =  $requestMethod . ':' . ($requestRoute !== '/' ? $requestRoute : '/tasks');
+$route =  $requestMethod . ':/' . ($requestRoute !== '/' ? $requestRoute : '/tasks');
 
 $controllerName = $controllersNamespace . $routes[$route]['controller'];
 $method = $routes[$route]['method'];

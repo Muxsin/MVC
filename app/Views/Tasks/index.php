@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="mb-1 row justify-content-end">
-            <form class="col-lg-6" action="<?php echo prepareUrl('/tasks'); ?>" method="get">
+            <form class="col-lg-6" action="/tasks" method="get">
                 <div class="form-row align-items-end">
                     <div class="form-group col  ">
                         <label for="order_by" class="">Сортировать по:</label>
@@ -56,9 +56,9 @@
                             }
                         }
                         echo "<td><div class='btn-group'>";
-                        echo "<a class='btn btn-sm btn-primary' href='" . prepareUrl('/tasks/show?taskId=' . $task->getId()) . "'>Показать</a>";
-                        echo "<a class='btn btn-sm btn-warning' href='" . prepareUrl('/tasks/edit?taskId=' . $task->getId()) . "'>Редактировать</a>";
-                        echo "<a class='btn btn-sm btn-danger' href='" . prepareUrl('/tasks/delete?taskId=' . $task->getId()) . "'>Удалить</a>";
+                        echo "<a class='btn btn-sm btn-primary' href='/tasks/show?taskId=" . $task->getId() . "'>Показать</a>";
+                        echo "<a class='btn btn-sm btn-warning' href='/tasks/edit?taskId=" . $task->getId() . "'>Редактировать</a>";
+                        echo "<a class='btn btn-sm btn-danger' href='/tasks/delete?taskId=" . $task->getId() . "'>Удалить</a>";
                         echo "</div></td>";
                         echo "</tr>";
                     }

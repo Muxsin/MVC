@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-use App\Controllers\TaskController;
 
 class AuthController {
 
@@ -31,10 +30,10 @@ class AuthController {
 
             addMessage('infos', 'Welcome, Admin!');
 
-            redirect(prepareUrl('/tasks'));
+            redirect('/tasks');
         } else {
             addMessage('errors', 'Invalid username or password');
-            redirect(prepareUrl('/auth'));
+            redirect('/auth');
         }
     }
     public function logout() {
@@ -44,6 +43,6 @@ class AuthController {
 
         addMessage('infos', 'Bye!');
 
-        redirect(prepareUrl('/tasks'));
+        redirect('/tasks');
     }
 }
